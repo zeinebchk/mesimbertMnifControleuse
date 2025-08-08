@@ -1,0 +1,112 @@
+<BarCodeScennerScreen>:
+    name: "barcode_scan"
+    canvas.before:
+        Color:
+            rgba: 1, 1, 1, 1  # fond sombre pour contraste
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [12]
+
+    BoxLayout:
+        id: main_layout
+        orientation: "vertical"
+        padding: dp(15)
+        spacing: dp(12)
+        MDTopAppBar:
+            title: "scan code a barre"
+            elevation: 2
+            md_bg_color: 0.133, 0.427, 0.408, 1
+            right_action_items: [["logout", lambda x: app.on_logout()]]
+        Label:
+            id: user_info
+            text: root.user_info_text  # mis à jour dynamiquement
+            size_hint_y: None
+            height: self.texture_size[1] + dp(8)
+            font_size: dp(16)
+            color: 1, 1, 1, 1
+            bold: True
+
+        BoxLayout:
+            orientation: "horizontal"
+            size_hint_y: None
+            height: dp(50)
+            spacing: dp(10)
+
+            Label:
+                text: "Scanner:"
+                size_hint_x: 0.1
+                font_size: dp(18)
+                color: 0, 0, 0, 1
+                bold: True
+
+            TextInput:
+                id: barcode_entry
+                hint_text: "Scanner avec douchette (ex: 752901-30-90)"
+                multiline: False
+                size_hint_x: 0.7   # plus large, s’adapte à l’espace restant
+                font_size: dp(16)
+                background_color: 1, 1, 1, 1
+                foreground_color: 0, 0, 0, 1
+                hint_text_color: 0.6, 0.6, 0.6, 1
+                on_text_validate: root.process_barcode()
+
+            Button:
+                id: clear_button
+                text: "Effacer"
+                size_hint_x: None
+                width: dp(80)     # bouton plus étroit
+                size_hint_y: None
+                height: dp(50)
+                font_size: dp(16)
+                background_normal: ""
+                background_color: 0.839, 0.584, 0.357, 1
+                color: 1, 1, 1, 1
+                on_press: root.clear_input()
+                canvas.before:
+                    Color:
+                        rgba: 0.839, 0.584, 0.357, 1
+                    RoundedRectangle:
+                        pos: self.pos
+                        size: self.size
+                        radius: [10]
+
+        Label:
+            text: "Informations:"
+            size_hint_y: None
+            height: self.texture_size[1] + dp(8)
+            font_size: dp(18)
+            color: 0, 0, 0, 1
+            bold: True
+
+        Label:
+            id: info_display
+            text: root.info_text
+            markup: True
+            size_hint_y: 1
+            font_size: dp(16)
+            color: 0, 0, 0, 1
+            halign: "left"
+            valign: "top"
+            padding: dp(10), dp(10)
+            text_size: self.width, None
+            canvas.before:
+                Color:
+                    rgba: 0.925, 0.973, 0.965, 1
+                RoundedRectangle:
+                    pos: self.pos
+                    size: self.size
+                    radius: [10]
+
+        # Bouton conditionnel (visible selon rôle)
+        Button:
+            id: accept_similar_btn
+            text: "Accepter OF similaire"
+            size_hint_y: None
+            height: dp(50)
+            font_size: dp(16)
+            background_normal: ""
+            background_color: 0.2, 0.6, 0.2, 1
+            on_press: root.activate_accept_similar_mode()
+            opacity: 1 if root.show_accept_similar else 0
+            disabled: not root.show_accept_similar

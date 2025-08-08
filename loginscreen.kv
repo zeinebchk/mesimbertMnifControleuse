@@ -1,0 +1,106 @@
+<LoginScreen>:
+    name:"login_screen"
+    canvas.before:
+        Color:
+            rgba: 0.95, 0.95, 0.95, 1  # Light gray background
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+    FloatLayout:
+        Label:
+            text: "Bienvenue!"
+            font_size: 36
+            bold: True
+            color: 0.2, 0.2, 0.2, 1
+            size_hint: None, None
+            size: self.texture_size
+            pos_hint: {"center_x": 0.5, "top": 0.95}
+
+        BoxLayout:
+            orientation: "vertical"
+            spacing: dp(20)
+            padding: dp(30)
+            size_hint: 0.6, 0.6
+            pos_hint: {"center_x": 0.5, "center_y": 0.5}
+            canvas.before:
+                Color:
+                    rgba: 1, 1, 1, 1
+                RoundedRectangle:
+                    pos: self.pos
+                    size: self.size
+                    radius: [20]
+
+            # Titre
+            Label:
+                text: "Login"
+                font_size: 30
+                size_hint_y: None
+                height: self.texture_size[1]
+                color: 0.3, 0.3, 0.3, 1
+
+            # Champ login
+            TextInput:
+                id: login
+                hint_text: "Enter your username"
+                font_size: 22
+                multiline: False
+                padding: [10, 10]
+                size_hint_y: None
+                height: dp(40)
+                background_normal: ""
+                background_active: ""
+                background_color: 0.95, 0.95, 0.95, 1
+                foreground_color: 0, 0, 0, 1
+
+            # Label erreur login
+            Label:
+                id: login_error
+                text: ""
+                font_size: 18
+                color: 1, 0, 0, 1  # rouge pour erreur
+                size_hint_y: None
+                height: self.texture_size[1]
+
+            # Mot de passe
+            Label:
+                text: "Password"
+                font_size: 30
+                size_hint_y: None
+                height: self.texture_size[1]
+                color: 0.3, 0.3, 0.3, 1
+
+            TextInput:
+                id: password
+                hint_text: "Enter your password"
+                font_size: 22
+                multiline: False
+                password: True
+                padding: [10, 10]
+                size_hint_y: None
+                height: dp(40)
+                background_normal: ""
+                background_active: ""
+                background_color: 0.95, 0.95, 0.95, 1
+                foreground_color: 0, 0, 0, 1
+                on_text_validate: root.on_login()
+
+            # Label erreur mot de passe
+            Label:
+                id: password_error
+                text: ""
+                font_size: 18
+                color: 1, 0, 0, 1
+                size_hint_y: None
+                height: self.texture_size[1]
+
+            # Bouton Login
+            Button:
+                text: "Login"
+                font_size: 18
+                size_hint_y: None
+                height: dp(45)
+                background_normal: ""
+                background_color: 0.2, 0.6, 0.86, 1
+                color: 1, 1, 1, 1
+                on_release: root.on_login()
