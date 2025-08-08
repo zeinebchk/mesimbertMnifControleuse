@@ -33,7 +33,7 @@ jobs:
         with:
           command: buildozer android debug
           buildozer_version: stable
-
+        
       - name: Upload artifacts
         uses: actions/upload-artifact@v4  # Mise à jour vers la v4
         with:
